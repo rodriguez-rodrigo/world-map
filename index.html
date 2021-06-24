@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        section {
+            background-image: url(./img/world_map_home.svg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 6rem 0;
+        }
+
+
+        .mapWrapper {
+            display: inline-block;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .map {
+            background-image: url(./img/world_map.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: 1px solid white;
+            padding-bottom: calc(647/1000*100%);
+            position: relative;
+        }
+
+        .map>svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="mapWrapper">
+            <div class="map">
+                <svg>
+                    <g id="map">
+
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function drawCircle(latitude, longitude) {
+            const mapWidth = 1000;
+            const mapHeight = 915;
+
+            const x = (longitude + 180) * (mapWidth / 360);
+
+            // convert from degrees to radians
+            const latRad = (latitude * Math.PI) / 180;
+
+            // get y value
+            const mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)));
+            const y = (mapHeight / 2) - (mapWidth * mercN / (2 * Math.PI));
+
+            console.log(mercN, x, y);
+            document.getElementById('map').innerHTML += `<circle cx="${x / 1000 * 100}%" cy="${y / 647 * 100}%" r="5px" fill="#E7C26D" />`;
+        }
+    </script>
+</body>
+
+</html>
